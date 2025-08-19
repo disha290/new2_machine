@@ -124,7 +124,7 @@ with st.form(key="input_form"):
 # --- Prediction Logic ---
 if predict:
     # Ensure no missing required fields
-    required_fields = [Gender, Married, Dependents, Education, Self_Employed, LoanAmount, Loan_Amount_Term, Credit_History, Property_Area]
+    required_fields = [Gender, Married, Dependents, Education, Self_Employed, LoanAmount, Loan_Amount_Term, Credit_History, Property_Area,ApplicantIncome,CoapplicantIncome]
     if any(f == '' for f in required_fields):
         st.warning("⚠️ Please fill in all fields before predicting.")
     else:
