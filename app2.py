@@ -150,19 +150,18 @@ if predict:
             }
             input_df = pd.DataFrame(input_dict)
 
-            # Step 2: Encode categorical binary columns
-            le = LabelEncoder()
-            for col in ['Gender', 'Married', 'Education', 'Self_Employed']:
-                input_df[col] = le.fit_transform(input_df[col])
+            # Step 2: One-hot encode ALL categorical features (consistent with training)
+            categorical_cols = ['Gender', 'Married', 'Education', 'Self_Employed', 'Dependents', 'Property_Area']
+            input_df = pd.get_dummies(input_df, columns=categorical_cols, drop_first=True)
 
-            # Step 3: One-hot encode multi-class features
-            input_df = pd.get_dummies(input_df, columns=['Dependents', 'Property_Area'], drop_first=True)
-
-            # Step 4: Align with training columns
+            # Step 3: Align with training columns
             input_df = input_df.reindex(columns=model_columns, fill_value=0)
 
-            # Step 5: Scale input
+            # Step 4: Scale input
             input_scaled = scaler.transform(input_df)
+
+
+            
 
             # Get probability of prediction
             prediction_proba = model.predict_proba(input_scaled)
